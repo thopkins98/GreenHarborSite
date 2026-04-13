@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Harbor Management Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="Logo.png">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green-deep:    #1B4332;
+            --green-mid:     #2D6A4F;
+            --cream:         #FAFAF7;
+            --text-dark:     #111827;
+            --text-mid:      #374151;
+            --text-light:    #6B7280;
+            --border:        #E2E5DC;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ─────────────────────────────── */
+        header {
+            padding: 28px 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: var(--cream);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 1.75em;
+            width: auto;
+            display: block;
+        }
+
+        .logo-name {
+            font-family: 'Cinzel', serif;
+            font-size: 25px;
+            font-weight: 400;
+            color: var(--green-deep);
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+
+        /* ── Shared button style ─────────────────── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--green-deep);
+            color: #fff;
+            padding: 15px 36px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.25s;
+        }
+
+        .btn-primary:hover { background: var(--green-mid); }
+
+        .btn-primary svg { transition: transform 0.25s; }
+
+        .btn-primary:hover svg { transform: translateX(4px); }
+
+        /* Slightly smaller variant for the header */
+        .btn-primary-sm {
+            padding: 11px 24px;
+            font-size: 10.5px;
+        }
+
+        /* ── Nav contact button (ghost/outlined) ─── */
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            background: transparent;
+            color: var(--green-deep);
+            padding: 9px 24px;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--green-deep);
+            cursor: pointer;
+            transition: background 0.28s ease, color 0.28s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--green-deep);
+            transform: translateY(100%);
+            transition: transform 0.28s ease;
+            z-index: 0;
+        }
+
+        .btn-nav:hover::before { transform: translateY(0); }
+
+        .btn-nav span {
+            position: relative;
+            z-index: 1;
+            transition: color 0.28s ease;
+        }
+
+        .btn-nav:hover span { color: #fff; }
+
+        /* ── Hero ────────────────────────────────── */
+        .hero {
+            min-height: calc(100vh - 48px);
+            padding: 72px 72px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            background-color: #0f1d14;
+            background-image:
+                linear-gradient(to right, #0b1810 0%, #1B4332 55%, #2D6A4F 100%);
+        }
+
+        /* Subtle wave/topographic texture suggesting water */
+        @keyframes wave-drift {
+            from { background-position: 0 0; }
+            to   { background-position: 400px 300px; }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Cpath d='M0 50 Q100 38 200 50 Q300 62 400 50' fill='none' stroke='%23ffffff' stroke-width='0.6'/%3E%3Cpath d='M0 100 Q100 88 200 100 Q300 112 400 100' fill='none' stroke='%23ffffff' stroke-width='0.6'/%3E%3Cpath d='M0 150 Q100 138 200 150 Q300 162 400 150' fill='none' stroke='%23ffffff' stroke-width='0.6'/%3E%3Cpath d='M0 200 Q100 188 200 200 Q300 212 400 200' fill='none' stroke='%23ffffff' stroke-width='0.6'/%3E%3Cpath d='M0 250 Q100 238 200 250 Q300 262 400 250' fill='none' stroke='%23ffffff' stroke-width='0.6'/%3E%3C/svg%3E");
+            background-size: 400px 300px;
+            opacity: 0.04;
+            pointer-events: none;
+            animation: wave-drift 28s linear infinite;
+        }
+
+        .hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 21px;
+            font-weight: 500;
+            line-height: 1.35;
+            color: #ffffff;
+            max-width: 480px;
+            margin-bottom: 14px;
+            letter-spacing: -0.01em;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.68);
+            max-width: 480px;
+            line-height: 1.85;
+            margin-bottom: 44px;
+            position: relative;
+        }
+
+
+        /* ── Rule ────────────────────────────────── */
+        .rule {
+            border: none;
+            border-top: 1px solid var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ── Contact ─────────────────────────────── */
+        .contact {
+            padding: 96px 72px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 5fr 7fr;
+            gap: 88px;
+            align-items: start;
+        }
+
+        .section-label {
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--green-mid);
+            margin-bottom: 20px;
+        }
+
+        .section-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(32px, 3vw, 44px);
+            font-weight: 400;
+            color: var(--green-deep);
+            line-height: 1.2;
+        }
+
+        /* ── Form ────────────────────────────────── */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field label {
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: var(--green-deep);
+        }
+
+        .field textarea {
+            resize: none;
+            min-height: 96px;
+        }
+
+        .form-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            padding-top: 8px;
+        }
+
+        .email-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .email-label {
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .email-link {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--green-deep);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .email-link:hover { color: var(--green-mid); }
+
+        /* ── Footer ──────────────────────────────── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 72px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-size: 11.5px;
+            color: var(--text-light);
+            letter-spacing: 0.03em;
+        }
+
+        /* ── Responsive ──────────────────────────── */
+        @media (max-width: 900px) {
+            header      { padding: 22px 32px; }
+            .hero       { padding: 48px 32px; min-height: 100svh; }
+            .contact    { padding: 64px 32px; grid-template-columns: 1fr; gap: 48px; }
+            .form-row   { grid-template-columns: 1fr; }
+            footer      { padding: 22px 32px; flex-direction: column; gap: 6px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────── -->
+<header>
+    <a href="#" class="logo" aria-label="Green Harbor Management Group">
+        <img src="Logo.png" alt="Green Harbor Management Group" class="logo-img">
+        <span class="logo-name">Green Harbor</span>
+    </a>
+    <nav>
+        <a href="#contact" class="btn-nav">
+            <span>Contact</span>
+        </a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- ── Hero ──────────────────────────────────── -->
+    <section class="hero">
+        <h1>Growing Exceptional Property Management Businesses</h1>
+        <p>Green Harbor Management Group is a long-term holding company that partners with founders and operators in the property management space, bringing to bear the latest technology and expertise to unlock the full potential of their businesses.</p>
+    </section>
+
+    <hr class="rule">
+
+    <!-- ── Contact ───────────────────────────────── -->
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+        <div>
+            <p class="section-label">Get in Touch</p>
+            <h2 id="contact-heading" class="section-heading">Let's Start a Conversation</h2>
+        </div>
+        <div>
+            <form class="contact-form" action="#" method="post">
+                <div class="form-row">
+                    <div class="field">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first_name" autocomplete="given-name" required>
+                    </div>
+                    <div class="field">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last_name" autocomplete="family-name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" autocomplete="tel">
+                </div>
+                <div class="field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us a bit about yourself or your business…"></textarea>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn-primary" style="align-self: flex-start;">
+                        Send Message
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="email-block">
+                        <span class="email-label">Or email us directly</span>
+                        <a href="mailto:info@greenharbormg.com" class="email-link">info@greenharbormg.com</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</main>
+
+<!-- ── Footer ──────────────────────────────────── -->
+<footer>
+    <p>Green Harbor Management Group</p>
+    <p>info@greenharbormg.com</p>
+</footer>
+
+</body>
+</html>
