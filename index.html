@@ -284,6 +284,22 @@
             min-height: 96px;
         }
 
+        .req-star {
+            color: var(--green-mid);
+            margin-left: 3px;
+        }
+
+        #form-status {
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.5;
+            display: none;
+            padding: 4px 0;
+        }
+
+        #form-status.success { color: var(--green-mid); }
+        #form-status.error   { color: #B91C1C; }
+
         .form-footer {
             display: flex;
             flex-direction: column;
@@ -373,19 +389,19 @@
             <h2 id="contact-heading" class="section-heading">Let's Start a Conversation</h2>
         </div>
         <div>
-            <form class="contact-form" action="#" method="post">
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="post">
                 <div class="form-row">
                     <div class="field">
-                        <label for="first-name">First Name</label>
+                        <label for="first-name">First Name<span class="req-star" aria-hidden="true">*</span></label>
                         <input type="text" id="first-name" name="first_name" autocomplete="given-name" required>
                     </div>
                     <div class="field">
-                        <label for="last-name">Last Name</label>
+                        <label for="last-name">Last Name<span class="req-star" aria-hidden="true">*</span></label>
                         <input type="text" id="last-name" name="last_name" autocomplete="family-name" required>
                     </div>
                 </div>
                 <div class="field">
-                    <label for="email">Email Address</label>
+                    <label for="email">Email Address<span class="req-star" aria-hidden="true">*</span></label>
                     <input type="email" id="email" name="email" autocomplete="email" required>
                 </div>
                 <div class="field">
@@ -393,16 +409,19 @@
                     <input type="tel" id="phone" name="phone" autocomplete="tel">
                 </div>
                 <div class="field">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us a bit about yourself or your business…"></textarea>
+                    <label for="message">Message<span class="req-star" aria-hidden="true">*</span></label>
+                    <textarea id="message" name="message" placeholder="Tell us a bit about yourself or your business…" required></textarea>
                 </div>
                 <div class="form-footer">
-                    <button type="submit" class="btn-primary" style="align-self: flex-start;">
-                        Send Message
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
+                    <div>
+                        <button type="submit" class="btn-primary" style="align-self: flex-start;">
+                            Send Message
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div id="form-status" role="status" aria-live="polite"></div>
+                    </div>
                     <div class="email-block">
                         <span class="email-label">Or email us directly</span>
                         <a href="mailto:info@greenharbormg.com" class="email-link">info@greenharbormg.com</a>
@@ -420,5 +439,43 @@
     <p>info@greenharbormg.com</p>
 </footer>
 
+<script>
+    (function () {
+        const form   = document.getElementById('contact-form');
+        const status = document.getElementById('form-status');
+        const btn    = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            btn.disabled = true;
+            status.style.display = 'none';
+            status.className = '';
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    status.textContent = 'Your message has been sent. We will be in touch shortly.';
+                    status.className = 'success';
+                    form.reset();
+                } else {
+                    const payload = await res.json().catch(() => ({}));
+                    throw new Error(payload.error || 'Submission failed');
+                }
+            } catch (_) {
+                status.textContent = 'Something went wrong. Please try again or email us directly.';
+                status.className = 'error';
+            }
+
+            status.style.display = 'block';
+            btn.disabled = false;
+        });
+    })();
+</script>
 </body>
 </html>
